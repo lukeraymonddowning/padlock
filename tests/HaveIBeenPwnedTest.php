@@ -6,7 +6,6 @@ use Lukeraymonddowning\Padlock\Facades\Padlock;
 
 class HaveIBeenPwnedTest extends TestCase
 {
-
     /** @test */
     public function it_can_check_if_a_password_has_been_breached()
     {
@@ -20,5 +19,4 @@ class HaveIBeenPwnedTest extends TestCase
         $secure = Padlock::check('Um@DnYMoAbhiN@4XgDa38ZvA')->isSecure();
         expect($secure)->toBeTrue();
     }
-
 }

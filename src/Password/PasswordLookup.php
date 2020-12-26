@@ -5,6 +5,7 @@ namespace Lukeraymonddowning\Padlock\Password;
 
 
 use Lukeraymonddowning\Padlock\Contracts\Password;
+use Lukeraymonddowning\Padlock\Facades\Padlock;
 
 class PasswordLookup
 {
@@ -14,6 +15,12 @@ class PasswordLookup
 
     public function isSecure()
     {
-        return $this->service->isSecure($this->password);
+        $secure = $this->service->isSecure($this->password);
+
+        if (!$secure) {
+            Padlock::insecurePasswordFound($this->password);
+        }
+
+        return $secure;
     }
 }

@@ -3,8 +3,11 @@
 namespace Lukeraymonddowning\Padlock\Providers;
 
 
+use App\Models\InsecurePasswordHash;
 use Illuminate\Support\ServiceProvider;
 use Lukeraymonddowning\Padlock\Contracts\Password;
+use Lukeraymonddowning\Padlock\Facades\Padlock as PadlockFacade;
+use Lukeraymonddowning\Padlock\Features;
 use Lukeraymonddowning\Padlock\Padlock;
 
 class PadlockServiceProvider extends ServiceProvider
@@ -23,14 +26,14 @@ class PadlockServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        if ($this->app->runningInConsole()) {
-            $this->publishes(
-                [
-                    __DIR__ . '/../../config/padlock.php' => config_path('padlock.php'),
-                    __DIR__ . '/../../stubs/fakes' => storage_path('padlock/fakes'),
-                ],
-                'padlock'
+        if (Features::shouldRecordInsecurePasswordHashes()) {
+            PadlockFacade::afterFindingInsecurePassword(
+                fn($password) => InsecurePasswordHash::firstOrCreate(['hash' => sha1(utf8_encode($password))])
             );
+        }
+
+        if ($this->app->runningInConsole()) {
+            $this->publishes([__DIR__ . '/../../config/padlock.php' => config_path('padlock.php')], 'padlock');
         }
     }
 }
