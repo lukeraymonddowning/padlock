@@ -4,7 +4,7 @@ namespace Lukeraymonddowning\Padlock\Tests;
 
 use Lukeraymonddowning\Padlock\Facades\Padlock;
 
-class HaveIBeenPwnedTest extends TestCase
+class PadlockFacadeTest extends TestCase
 {
     /** @test */
     public function it_can_check_if_a_password_has_been_breached()

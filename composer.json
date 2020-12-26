@@ -9,6 +9,9 @@
       "email": "lukeraymonddowning@gmail.com"
     }
   ],
+  "scripts": {
+    "test": "vendor/bin/phpunit"
+  },
   "require": {
     "illuminate/support": "^8.20",
     "guzzlehttp/guzzle": "^7.2"
