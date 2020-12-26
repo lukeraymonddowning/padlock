@@ -1,0 +1,40 @@
+{
+  "name": "lukeraymonddowning/padlock",
+  "description": "A Laravel package that adds an extra layer of security to your user's credentials",
+  "type": "package",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "luke",
+      "email": "lukeraymonddowning@gmail.com"
+    }
+  ],
+  "require": {
+    "illuminate/support": "^8.20",
+    "guzzlehttp/guzzle": "^7.2"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^6.7",
+    "pestphp/pest-plugin-expectations": "^0.3.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Lukeraymonddowning\\Padlock\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Lukeraymonddowning\\Padlock\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Lukeraymonddowning\\Padlock\\Providers\\PadlockServiceProvider"
+      ],
+      "aliases": {
+        "Padlock": "Lukeraymonddowning\\Padlock\\Facades\\Padlock"
+      }
+    }
+  }
+}
