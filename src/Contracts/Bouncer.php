@@ -4,7 +4,7 @@
 namespace Lukeraymonddowning\Padlock\Contracts;
 
 
-interface Password
+interface Bouncer
 {
     public function isSecure($password): bool;
 }

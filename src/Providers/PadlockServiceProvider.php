@@ -5,7 +5,7 @@ namespace Lukeraymonddowning\Padlock\Providers;
 
 use App\Models\InsecurePasswordHash;
 use Illuminate\Support\ServiceProvider;
-use Lukeraymonddowning\Padlock\Contracts\Password;
+use Lukeraymonddowning\Padlock\Contracts\Bouncer;
 use Lukeraymonddowning\Padlock\Facades\Padlock as PadlockFacade;
 use Lukeraymonddowning\Padlock\Features;
 use Lukeraymonddowning\Padlock\Padlock;
@@ -21,7 +21,7 @@ class PadlockServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../../config/padlock.php', 'padlock');
 
         $provider = config('padlock.default');
-        $this->app->bind(Password::class, config("padlock.providers.$provider.driver"));
+        $this->app->bind(Bouncer::class, config("padlock.providers.$provider.driver"));
     }
 
     public function boot()

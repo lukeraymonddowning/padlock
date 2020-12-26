@@ -6,9 +6,9 @@ namespace Lukeraymonddowning\Padlock\Password;
 
 use Http;
 use Illuminate\Support\Str;
-use Lukeraymonddowning\Padlock\Contracts\Password;
+use Lukeraymonddowning\Padlock\Contracts\Bouncer;
 
-class HaveIBeenPwned implements Password
+class HaveIBeenPwned implements Bouncer
 {
     const BASE_URL = "https://api.pwnedpasswords.com/range/";
     protected $hash;
