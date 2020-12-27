@@ -10,7 +10,6 @@ use Lukeraymonddowning\Padlock\Contracts\Bouncer;
 
 class HaveIBeenPwned implements Bouncer
 {
-    const BASE_URL = "https://api.pwnedpasswords.com/range/";
     protected $hash;
 
     public function isSecure($password): bool
@@ -29,17 +28,7 @@ class HaveIBeenPwned implements Bouncer
 
     protected function makeRequest()
     {
-        return static::client()->get(static::BASE_URL . $this->hashPrefix())->body();
-    }
-
-    protected static function client()
-    {
-        return Http::withHeaders(
-            [
-                'hibp-api-key' => config('padlock.providers.haveibeenpwned.key'),
-                'user-agent' => config('app.name'),
-            ]
-        );
+        return Http::get("https://api.pwnedpasswords.com/range/" . $this->hashPrefix())->body();
     }
 
     protected function hashPrefix()
