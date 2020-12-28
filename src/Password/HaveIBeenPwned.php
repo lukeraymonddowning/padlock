@@ -6,9 +6,9 @@ namespace Lukeraymonddowning\Padlock\Password;
 
 use Http;
 use Illuminate\Support\Str;
-use Lukeraymonddowning\Padlock\Contracts\Bouncer;
+use Lukeraymonddowning\Padlock\Contracts\Sentry;
 
-class HaveIBeenPwned implements Bouncer
+class HaveIBeenPwned implements Sentry
 {
     protected $hash;
 

@@ -4,12 +4,12 @@
 namespace Lukeraymonddowning\Padlock\Password;
 
 
-use Lukeraymonddowning\Padlock\Contracts\Bouncer;
+use Lukeraymonddowning\Padlock\Contracts\Sentry;
 use Lukeraymonddowning\Padlock\Facades\Padlock;
 
 class PasswordLookup
 {
-    public function __construct(protected $password, protected Bouncer $service)
+    public function __construct(protected $password, protected Sentry $service)
     {
     }
 
