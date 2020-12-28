@@ -14,16 +14,8 @@ class HaveIBeenPwned implements Bouncer
 
     public function isSecure($password): bool
     {
-        $this->hash = sha1(utf8_encode($password));
-        return !$this->formattedResults()->contains(Str::lower($this->hash));
-    }
-
-    protected function formattedResults()
-    {
-        return collect(preg_split('/\n|\r\n?/', $this->makeRequest()))
-            ->map(fn($result) => Str::before($result, ":"))
-            ->map(fn($suffix) => $this->hashPrefix() . $suffix)
-            ->map(fn($hash) => Str::lower($hash));
+        $this->hash = Str::upper(sha1(utf8_encode($password)));
+        return !Str::contains($this->makeRequest(), $this->hashSuffix());
     }
 
     protected function makeRequest()
@@ -34,5 +26,10 @@ class HaveIBeenPwned implements Bouncer
     protected function hashPrefix()
     {
         return Str::limit($this->hash, 5, "");
+    }
+
+    protected function hashSuffix()
+    {
+        return Str::after($this->hash, $this->hashPrefix());
     }
 }

@@ -35,14 +35,14 @@ class TestCase extends BaseTestCase
         parent::setUp();
         $this->migrations();
 
-        Http::fake(
-            [
-                'https://api.pwnedpasswords.com/range/*' => function (Request $request) {
-                    $hash = Str::after($request->url(), "/range/");
-                    return Http::response(file_get_contents(__DIR__ . "/fakes/$hash.txt"));
-                }
-            ]
-        );
+//        Http::fake(
+//            [
+//                'https://api.pwnedpasswords.com/range/*' => function (Request $request) {
+//                    $hash = Str::after($request->url(), "/range/");
+//                    return Http::response(file_get_contents(__DIR__ . "/fakes/$hash.txt"));
+//                }
+//            ]
+//        );
     }
 
     protected function migrations()
