@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 namespace Lukeraymonddowning\Padlock\Password;
 
+use Illuminate\Http\Client\Factory;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Lukeraymonddowning\Padlock\Contracts\Sentry;
 
 final class HaveIBeenPwned implements Sentry
 {
+    public function __construct(private PendingRequest $request)
+    {
+    }
+
     public function isSecure(string $password): bool
     {
         $hash = Str::upper(sha1(utf8_encode($password)));
@@ -19,6 +25,9 @@ final class HaveIBeenPwned implements Sentry
 
     private function makeRequest(string $hash): string
     {
-        return Http::get("https://api.pwnedpasswords.com/range/" . substr($hash, 0, 5))->body();
+        return $this
+            ->request
+            ->get("https://api.pwnedpasswords.com/range/" . substr($hash, 0, 5))
+            ->body();
     }
 }

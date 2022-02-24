@@ -2,12 +2,15 @@
 
 namespace Lukeraymonddowning\Padlock\Tests;
 
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Lukeraymonddowning\Padlock\Providers\PadlockServiceProvider;
+use Lukeraymonddowning\Padlock\Tests\Doubles\Http\TestPendingRequest;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -16,15 +19,11 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
         $this->migrations();
+    }
 
-//        Http::fake(
-//            [
-//                'https://api.pwnedpasswords.com/range/*' => function (Request $request) {
-//                    $hash = Str::after($request->url(), "/range/");
-//                    return Http::response(file_get_contents(__DIR__ . "/fakes/$hash.txt"));
-//                }
-//            ]
-//        );
+    public function getTestRequest(): PendingRequest
+    {
+        return new TestPendingRequest(new Factory($this->app->make(Dispatcher::class)));
     }
 
     protected function getPackageProviders($app): array
