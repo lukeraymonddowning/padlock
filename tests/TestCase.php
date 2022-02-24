@@ -10,9 +10,24 @@ use Illuminate\Support\Str;
 use Lukeraymonddowning\Padlock\Providers\PadlockServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
-class TestCase extends BaseTestCase
+abstract class TestCase extends BaseTestCase
 {
-    protected function getPackageProviders($app)
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->migrations();
+
+//        Http::fake(
+//            [
+//                'https://api.pwnedpasswords.com/range/*' => function (Request $request) {
+//                    $hash = Str::after($request->url(), "/range/");
+//                    return Http::response(file_get_contents(__DIR__ . "/fakes/$hash.txt"));
+//                }
+//            ]
+//        );
+    }
+
+    protected function getPackageProviders($app): array
     {
         return [PadlockServiceProvider::class];
     }
@@ -26,27 +41,12 @@ class TestCase extends BaseTestCase
         }
     }
 
-    protected static function usingDatabase()
+    protected static function usingDatabase(): bool
     {
         return in_array(RefreshDatabase::class, class_uses_recursive(static::class));
     }
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->migrations();
-        
-//        Http::fake(
-//            [
-//                'https://api.pwnedpasswords.com/range/*' => function (Request $request) {
-//                    $hash = Str::after($request->url(), "/range/");
-//                    return Http::response(file_get_contents(__DIR__ . "/fakes/$hash.txt"));
-//                }
-//            ]
-//        );
-    }
-
-    protected function migrations()
+    protected function migrations(): void
     {
         if (!static::usingDatabase()) {
             return;
