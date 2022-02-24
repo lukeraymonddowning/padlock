@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Lukeraymonddowning\Padlock\Password;
 
@@ -7,15 +8,15 @@ namespace Lukeraymonddowning\Padlock\Password;
 use Lukeraymonddowning\Padlock\Contracts\Sentry;
 use Lukeraymonddowning\Padlock\Facades\Padlock;
 
-class PasswordLookup
+final class PasswordLookup
 {
-    public function __construct(protected $password, protected Sentry $service)
+    public function __construct(protected string $password, protected Sentry $service)
     {
     }
 
-    public function isSecure()
+    public function isSecure(): bool
     {
-        if (!$secure = $this->service->isSecure($this->password)) {
+        if (! $secure = $this->service->isSecure($this->password)) {
             Padlock::insecurePasswordFound($this->password);
         }
 

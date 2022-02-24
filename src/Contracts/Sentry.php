@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Lukeraymonddowning\Padlock\Contracts;
 
 
 interface Sentry
 {
-    public function isSecure($password): bool;
+    public function isSecure(string $password): bool;
 }

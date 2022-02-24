@@ -1,23 +1,24 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Lukeraymonddowning\Padlock;
 
 
-class Features
+final class Features
 {
-    protected static function has($feature)
+    private static function has($feature): bool
     {
         return in_array($feature, config('padlock.features'));
     }
 
-    public static function recordInsecurePasswordHashes()
+    public static function recordInsecurePasswordHashes(): string
     {
         return 'record-insecure-password-hashes';
     }
 
-    public static function shouldRecordInsecurePasswordHashes()
+    public static function shouldRecordInsecurePasswordHashes(): bool
     {
-        return static::has(static::recordInsecurePasswordHashes());
+        return self::has(self::recordInsecurePasswordHashes());
     }
 }
