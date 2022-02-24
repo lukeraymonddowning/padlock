@@ -10,17 +10,15 @@ use Lukeraymonddowning\Padlock\Contracts\Sentry;
 
 final class HaveIBeenPwned implements Sentry
 {
-    protected string $hash;
-
     public function isSecure(string $password): bool
     {
-        $this->hash = Str::upper(sha1(utf8_encode($password)));
+        $hash = Str::upper(sha1(utf8_encode($password)));
 
-        return ! Str::contains($this->makeRequest(), substr($this->hash, 5));
+        return ! Str::contains($this->makeRequest($hash), substr($hash, 5));
     }
 
-    private function makeRequest(): string
+    private function makeRequest(string $hash): string
     {
-        return Http::get("https://api.pwnedpasswords.com/range/" . substr($this->hash, 0, 5))->body();
+        return Http::get("https://api.pwnedpasswords.com/range/" . substr($hash, 0, 5))->body();
     }
 }
