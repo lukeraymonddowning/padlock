@@ -3,6 +3,7 @@
 namespace Lukeraymonddowning\Padlock\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -34,7 +35,7 @@ class TestCase extends BaseTestCase
     {
         parent::setUp();
         $this->migrations();
-
+        
 //        Http::fake(
 //            [
 //                'https://api.pwnedpasswords.com/range/*' => function (Request $request) {
